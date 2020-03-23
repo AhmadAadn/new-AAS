@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use App\Student;
 use App\feedback;
-
+use App\ticket;
 use Illuminate\Http\Request;
 
 class feedbackController extends Controller
@@ -14,18 +14,18 @@ class feedbackController extends Controller
     }
     public function stor(Request $request){
        
-        $advi = Student::where('user_id', auth()->user()->id)->first();
-        
+        $stu = Student::where('user_id', auth()->user()->id)->first();
+        if ($ticket = Ticket::find($request->id)) {
+           
+            $t = $ticket->type;
+        }
         $feedback = new Feedback();
-        $feedback->content = $request->feedback;
-        $feedback->type = 'Advise about course';
-        $feedback->ticket_id = 3;
-        $feedback->students_id = $advi->id;
-        $feedback->advi_id = $advi->Advisor_id;
+        $feedback->content = $request->content;
+        $feedback->type = $t;
+        $feedback->ticket_id = $request->id;
+        $feedback->students_id = $stu->id;
+        $feedback->advi_id = $stu->Advisor_id;
         $feedback->save();
-
-        $show = feedback::all();
-        return $show ;
         redirect('/ticket');
         
     }

@@ -1,5 +1,5 @@
 @extends('main')
-@section('title','Home')
+@section('title','Ticket')
 @section('contete2')
 
 <div>
@@ -19,7 +19,7 @@
 				@if($ticket->count() == 0 )
 
 				<H1>No Tickets yet!! </H1>
-				@endif
+				@else
 					@foreach($ticket as $tickets)
 					<tr>
 						
@@ -28,9 +28,30 @@
 					<td>{{$tickets->created_at}}</td>
 					<td>{{$tickets->state}}</td>
 					<td>{{$tickets->type}}</td>
-					
+					<td>
+					 <a href="{{url('/delete'.$tickets->id)}}" class="btn btn-primary bg-danger" role="button"
+						aria-disabled="true">Delete</a></td>
+					<td>		
+						<button class="btn btn-primary bg-danger" onclick="document.getElementById('feedback').style.display='block'">
+						New Feedback!</button>
+			
+					<div id="feedback" class="modal">
+			
+						<form method="POST" class="modal-content animate" action="{{url('/feedback'.$tickets->id)}}" enctype="multipart/form-data">
+							@csrf
+			
+							<div class="imgcontainer">
+								<span onclick="document.getElementById('feedback').style.display='none'" class="close" title="Close PopUp">&times;</span>
+								<h1 style="text-align:center">Create New Feedback</h1>
+							</div>
+								<textarea id="w3mission" name="content" rows="4" cols="130" required>
+			
+							</textarea>
+							<input class="btn btn-lg btn-primary btn-block" type="submit">
+						</form></td>
+			 		</tr>
 					@endforeach
-				
+					@endif
 				
 			</tbody>
 
@@ -51,7 +72,7 @@
 				<div class="container">
 
 					<div class="dropdown">
-						<select id="select" name="select" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+						<select id="select" name="select" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" required>
 							Pleas Select The Type
 							<option class="dropdown-item flaticon-books"   value="Advise about course">Advise about course</option>
 							<option class="dropdown-item flaticon-reading"  value="Advise study plan">Advise study plan</option>
@@ -61,7 +82,7 @@
 						</div>
 					</div>
 					<br>
-					<textarea id="w3mission" name="content" rows="4" cols="130">
+					<textarea id="w3mission" name="content" rows="4" cols="130" required>
 
 				</textarea>
 				<input class="btn btn-lg btn-primary btn-block" type="submit">

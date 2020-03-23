@@ -155,6 +155,8 @@
 </head>
 
 <body>
+
+  @if (Auth()->user()->role_id == 2)
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light navbar navbar-expand-md navbar-light bg-white shadow-sm" id="ftco-navbar" >
     <div class="container d-flex align-items-center px-4">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -163,7 +165,78 @@
       <div class="collapse navbar-collapse" id="ftco-nav">
         <div id="app">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item"><a href="{{url('/profile')}}" class="nav-link">Profile</a></li>
+          <li class="nav-item"><a href="{{url('/Aprofle')}}" class="nav-link">Profile</a></li>
+          <li class="nav-item"><a href="{{url('/Ahome')}}" class="nav-link">Home</a></li>
+          <li class="nav-item"><a href="{{url('/Aticket')}}" class="nav-link">Ticket</a></li>
+          <li class="nav-item"><a href="{{url('/Aadvisor')}}" class="nav-link">Advisor</a></li>
+          <li class="nav-item">     
+          <div class="container">
+                    
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+    
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <!-- Left Side Of Navbar -->
+                        <ul class="navbar-nav mr-auto">
+    
+                        </ul>
+    
+                        <!-- Right Side Of Navbar -->
+                        <ul class="navbar-nav ml-auto">
+                            <!-- Authentication Links -->
+                            @guest
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                              
+                            @else
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                    </a>
+    
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
+                                                         document.getElementById('logout-form').submit();">
+                                            {{ __('Logout') }}
+                                        </a>
+    
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </li>
+                            @endguest
+                        </ul>
+                    </div>
+                </div>
+              </li>
+    
+            <main class="py-4">
+                @yield('content')
+            </main>
+        </div>
+        </ul>
+      </div>
+      
+    </div>
+   
+
+
+  </nav>
+  @yield('adi con')
+  @else
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light navbar navbar-expand-md navbar-light bg-white shadow-sm" id="ftco-navbar" >
+    <div class="container d-flex align-items-center px-4">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="oi oi-menu"></span> Menu
+      </button>
+      <div class="collapse navbar-collapse" id="ftco-nav">
+        <div id="app">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a href="{{url('/profle')}}" class="nav-link">Profile</a></li>
           <li class="nav-item"><a href="{{url('/home')}}" class="nav-link">Home</a></li>
           <li class="nav-item"><a href="{{url('/ticket')}}" class="nav-link">Ticket</a></li>
           <li class="nav-item"><a href="{{url('/advisor')}}" class="nav-link">Advisor</a></li>
@@ -220,23 +293,25 @@
       </div>
       
     </div>
-    
-
-
   </nav>
  
   <!-- END nav -->
   @yield('contete2')
+  
+@endif
+
+
+
+
   <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
       <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+      <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
+    </div>
 
   <footer class="ftco-footer ftco-bg-dark ftco-section">
     <div class="container">
       <div class="row mb-6">
-
-
         <div class="col-md-6 col-lg-3">
           <div class="ftco-footer-widget mb-5">
             <h2 class="ftco-heading-2">Subscribe Us!</h2>
@@ -252,6 +327,8 @@
 
     </div>
   </footer>
+  
+  
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/popper.min.js"></script>
@@ -270,12 +347,23 @@
     // If user clicks anywhere outside of the modal, Modal will close
 
     var modal = document.getElementById('modal-wrapper');
+    var modal2 = document.getElementById('feedback');
+    var modal3 = document.getElementById('reply');
+
     window.onclick = function(event) {
       if (event.target == modal) {
         modal.style.display = "none";
-      }
+        }
+     if (event.target == modal2) {
+        modal2.style.display = "none";
+        }
+      if (event.target == modal3) {
+        modal3.style.display = "none";
+        }
     }
   </script>
+
+  
   @include('sweetalert::alert')
 
 </body>

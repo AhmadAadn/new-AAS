@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth;
 use App\Student;
 use App\Ticket;
+use App\feedback;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Validator;
+
 
 class ticketController extends Controller
 {
@@ -14,7 +17,7 @@ class ticketController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
+    public function index() 
     {
         $stu = Student::where('user_id', auth()->user()->id)->first();
         $ticket = Ticket::where('students_id', $stu->id)->get();
@@ -30,8 +33,8 @@ class ticketController extends Controller
             'content' => 'requird'
         ]);
 
-        if($validator->failed()){
-            return back().with('errors', $validator->massages->all()[8])->withInput();
+        if ($validator->failed()) {
+            return back() . with('errors', $validator->massages->all()[8])->withInput();
         }
 
         $advi = Student::where('user_id', auth()->user()->id)->first();
@@ -44,5 +47,24 @@ class ticketController extends Controller
 
         $show = Ticket::all();
         return redirect('/ticket');
+    }
+
+
+   
+    public function delete($id)
+    {
+        $stu = Student::where('user_id', auth()->user()->id)->first();
+        if($ticket = Ticket::find($id)){
+        if ($stu->id != $ticket->students_id){
+            return redirect('ticket');
+        }
+            $feed = Feedback::where('ticket_id', $id)->first();
+            if($feed = feedback::find($id)){
+            $feed->delete();}
+            $ticket->delete();
+        }else{
+            $ticket->delete(); 
+        }
+        return redirect('ticket');
     }
 }

@@ -20,5 +20,22 @@ Route::get('/home', 'HomeController@index')->name('home');
  
 Route::get('/ticket', 'ticketController@index');
 Route::post('/ticket', 'ticketController@stor')->name('ticket');
+Route::get('/delete{id}', 'ticketController@delete');
 
-Route::post('/feedback', 'feedbackController@stor')->name('feedback');
+
+Route::post('/feedback{id}', 'feedbackController@stor')->name('feedback');
+
+Route::get('/profle', 'profileController@index');
+
+
+
+Route::get('/Aticket', 'advisorTicket@index');
+Route::get('/reply', 'advisorTicket@saveReply');
+
+
+Route::get('/Ahome', 'advisorHomeController@index');
+ 
+
+Route::get('/bbb', function(){
+    return view('advisor/contact');
+});
