@@ -36,7 +36,7 @@
 						New Feedback!</button>
 			
 					<div id="feedback" class="modal">
-			
+			 
 						<form method="POST" class="modal-content animate" action="{{url('/feedback'.$tickets->id)}}" enctype="multipart/form-data">
 							@csrf
 			

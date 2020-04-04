@@ -16,7 +16,7 @@ class feedbackController extends Controller
        
         $stu = Student::where('user_id', auth()->user()->id)->first();
         if ($ticket = Ticket::find($request->id)) {
-           
+            
             $t = $ticket->type;
         }
         $feedback = new Feedback();
